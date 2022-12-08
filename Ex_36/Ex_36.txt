@@ -1,0 +1,49 @@
+module Ex_36(input logic n, d, q, clk, reset,
+	    output logic dispense, rn, rd, r20);
+  typedef enum logic[3:0] {s0 = 4'b0000,
+  s5 = 4'b0001, s10 = 4'b0010, s15 = 4'b0101, s20 = 4'b0110, s25 = 4'b0011, s30 = 4'b0100, s35 = 4'b0111, s40 = 4'b1000, s45 = 4'b1001} State;
+  State state, nextState; 
+  always_ff @(posedge clk)
+    if(reset) state <= s0;
+    else      state <= nextState;
+  //next state logic 
+  always_comb
+	  case(state)
+		 s0: 
+		  if(n)       nextState = s5;
+		  else if(d)  nextState = s10;
+		  else if(q)  nextState = s25;
+		  else        nextState = s0;
+		 s5: 
+			if(n)			nextState = s10;
+			else if(d)	nextState = s15;
+			else if(q)  nextState = s30;
+			else  		nextState = s5;
+		 s10:
+			if(n)			nextState = s15;
+			else if(d)  nextState = s20;
+			else if(q)  nextState = s35;
+			else   		nextState = s10;
+		 s15:
+			if(n) 		nextState = s20;
+			else if(d)  nextState = s25;
+			else if(q)  nextState = s40;
+			else   		nextState = s15;
+		 s20:
+			if(n)			nextState = s25;
+			else if(d)  nextState = s30;
+			else if(q)  nextState = s45;
+			else 			nextState = s20;
+		 s25:  			nextState = s0;
+		 s30:          nextState = s0;
+		 s35:          nextState = s0;
+		 s40:          nextState = s0;
+		 s45:          nextState = s0;
+		 default:      nextState = s0;
+     endcase
+	  //output logic
+	  assign dipense = {state == s25} | {state == s30} | {state == s35} | {state == s40} | {state == s45};
+	  assign rn = {state == s30} | {state == s40};
+	  assign rd = {state == s35} | {state == s45};
+	  assign r20 = {state == s45};
+endmodule

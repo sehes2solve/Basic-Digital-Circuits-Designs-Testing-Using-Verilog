@@ -1,0 +1,27 @@
+module Ex_34 (input logic TA, TB,clk,reset,output logic[1:0] LA, LB);
+  typedef enum logic[2:0] {s0,s1,s2,s3,s4,s5} statetype;
+	statetype state,nextstate;
+	parameter green = 2'b00;parameter yellow = 2'b01;parameter red = 2'b10;
+		always_ff@(posedge clk,posedge reset)
+			if(reset) state <= s0;
+			else if(clk) state <= nextstate;
+		always_comb
+			case(state)
+				s0: nextstate = (TA) ? s0 : s1;
+				s1: nextstate = s2;
+				s2: nextstate = s3;
+			   s3: nextstate = (TB) ? s3 : s4;
+				s4: nextstate = s5;
+				s5: nextstate = s0;
+			endcase
+		always_comb
+			case(state)
+				s0: {LA,LB} = {green,red};	
+				s1: {LA,LB} = {yellow,red};
+				s2: {LA,LB} = {red,red};
+			   s3: {LA,LB} = {red,green};
+				s4: {LA,LB} = {red,yellow};
+				s5: {LA,LB} = {red,red};
+			endcase
+		
+endmodule 

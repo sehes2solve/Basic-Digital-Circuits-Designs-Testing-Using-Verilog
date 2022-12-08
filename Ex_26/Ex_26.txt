@@ -1,0 +1,35 @@
+module Ex_26(
+	E,
+	S,
+	R,
+	Q,
+	Q2
+);
+
+
+input wire	E;
+input wire	S;
+input wire	R;
+output wire	Q;
+output wire	Q2;
+
+wire	SYNTHESIZED_WIRE_0;
+wire	SYNTHESIZED_WIRE_1;
+wire	SYNTHESIZED_WIRE_2;
+wire	SYNTHESIZED_WIRE_3;
+
+assign	Q = SYNTHESIZED_WIRE_3;
+assign	Q2 = SYNTHESIZED_WIRE_0;
+
+
+
+assign	SYNTHESIZED_WIRE_1 = ~(E | S);
+
+assign	SYNTHESIZED_WIRE_2 = ~(R | E);
+
+assign	SYNTHESIZED_WIRE_3 = ~(SYNTHESIZED_WIRE_0 | SYNTHESIZED_WIRE_1);
+
+assign	SYNTHESIZED_WIRE_0 = ~(SYNTHESIZED_WIRE_2 | SYNTHESIZED_WIRE_3);
+
+
+endmodule

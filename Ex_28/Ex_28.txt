@@ -1,0 +1,7 @@
+module Ex_28(input logic D, CLK, output logic Q);
+  logic n1, n2, notClock;
+  assign #1 n1 = CLK & D;
+  assign notClock = ~CLK;
+  assign #1 n2 = notClock & Q;
+  assign #1 Q = n1 | n2;
+endmodule

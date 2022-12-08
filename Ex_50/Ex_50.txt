@@ -1,0 +1,114 @@
+a-  include signal d in the sensitivity list.
+module latch(input logic clk,   input  logic [3:0] d, output logic [3:0] q);
+  always_latch
+    if(clk) q<= d;
+endmodule 
+
+b-   include signal b in the sensitivity list.
+module gates(input  logic [3:0] a, b, output logic [3:0] y1, y2, y3, y4, y5);
+   always_comb      
+	begin         
+	  y1 = a & b;          
+	  y2 = a | b;          
+	  y3 = a ^ b;          
+	  y4 = ~(a & b);          
+	  y5 = ~(a | b);      
+end endmodule
+
+c-  All input signal should be added to the sensitivity list, and without posedge because we need to be sensitive to any change.
+
+module mux2(input  logic [3:0] d0, d1,  input  logic s, output logic [3:0] y);
+ always_comb      
+   if (s) y = d1;      
+   else   y = d0; 
+endmodule 
+
+
+d-  need begin & end, need non-blocking assignment(but it works anyway).
+module twoflops(input  logic clk, input  logic d0, d1, output logic q0, q1);
+ always_ff @(posedge clk)   
+   begin      
+   q1 <= d1;               
+   q0 <= d0;           
+ end endmodule 
+ 
+e  - reset in not declared, it's a good practice to sepereate the next state logic from state register. all cases of out1 & out2 are not included.
+module FSM(input  logic clk, input  logic reset, input  logic a, output logic out1, out2);
+   logic  state, nextstate;
+   // state register  
+   always_ff @(posedge clk, posedge reset)     
+	if (reset)   state <= 1'b0;     
+	else       state <= nextstate;
+   // next state logic    
+   always_comb     
+     case (state)  1'b0: 
+	if (a) nextstate = 1'b1; 
+        else nextstate = 1'b0;       
+     1'b1: 
+	if (~a) nextstate = 1'b0;             
+	else nextstate = 1'b1;     
+   endcase
+   // output logic 
+   always_comb       
+	if (state == 0) {out1, out2} = {1'b1, 1'b0};      
+	else            {out1, out2} = {1'b0, 1'b1}; 
+endmodule 
+
+f-  else missing
+module priority(input  logic [3:0] a,  output logic [3:0] y);
+ always_comb      
+  if(a[3]) y = 4'b1000;      
+  else if (a[2]) y = 4'b0100;      
+  else if (a[1]) y = 4'b0010;      
+  else if (a[0]) y = 4'b0001;      
+  else           
+  y = 4'b0000; 
+endmodule 
+
+g- default missing
+ module divideby3FSM(input  logic clk,input  logic reset,output logic out);
+   logic  [1:0] state, nextstate;
+   parameter S0 = 2'b00;   
+   parameter S1 = 2'b01;    
+   parameter S2 = 2'b10;
+   // State Register   
+   always_ff @(posedge clk, posedge reset)      
+     if (reset) state <= S0;      
+     else       state <= nextstate;
+   // Next State Logic   
+   always_comb      
+     case (state)         
+     S0:      nextstate = S1;         
+     S1:      nextstate = S2;         
+     S2:      nextstate = S0;         
+     default: nextstate = S0;      
+     endcase
+   // Output Logic   
+   assign out = (state == S2); 
+endmodule
+
+h-   missing ~
+module mux2tri(input  logic [3:0] d0, d1, input  logic s, output logic [3:0] y);
+   tristate t0(d0, ~s, y);   
+   tristate t1(d1, s, y);
+endmodule
+
+i -asssign q(output) in multiple always statements & this is not enabled flip flop so edit the name
+module floprsen(input logic clk, input logic reset, input logic set, input logic [3:0] d, output logic [3:0] q);
+   always_ff @(posedge clk, posedge reset) 
+     if (reset) q <= 0; 
+     else q <= d; 
+   always @(set) 
+     if (set) q <= 1; 
+endmodule
+
+j  -use blocking assignment instead(casuse this is a combinational module), 
+also it's better to use always with all inputs to make sure all of them are covered.
+module and3(input  logic a, b, c, output logic y);
+   logic tmp;
+   always_comb     
+   begin      
+     tmp = a & b;      
+     y = tmp & c;     
+end endmodule
+

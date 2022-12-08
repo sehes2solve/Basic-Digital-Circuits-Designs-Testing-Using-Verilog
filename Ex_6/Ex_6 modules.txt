@@ -1,0 +1,22 @@
+module Ex_6(input logic [3:0]H,output logic [7:0] ss);
+														 //abcdefg
+	always_comb
+		 case(H)        //abc_defg
+			4'h0 : ss = 7'b111_1110;
+			4'h1 : ss = 7'b011_0000;
+			4'h2 : ss = 7'b110_1101;
+			4'h3 : ss = 7'b111_1001;
+			4'h4 : ss = 7'b011_0011;
+			4'h5 : ss = 7'b101_1011;
+			4'h6 : ss = 7'b101_1111;
+			4'h7 : ss = 7'b111_0000;
+			4'h8 : ss = 7'b111_1111;
+			4'h9 : ss = 7'b111_0011; 
+			4'ha : ss = 7'b111_0111;
+			4'hb : ss = 7'b001_1111;
+			4'hc : ss = 7'b000_1101;
+			4'hd : ss = 7'b011_1101;
+			4'he : ss = 7'b100_1111;
+			4'hf : ss = 7'b100_0111;
+		endcase
+endmodule

@@ -1,0 +1,43 @@
+module Ex_30(input logic P,R,reset,clk,output logic q);
+logic next;
+	always_ff@(posedge clk,posedge reset)
+		if(reset) q <= 0;
+		else if(clk) q <= next;
+	always_comb
+		case(q)
+			0: next = (P)? 1:q;
+			1: next = (R)? 0:q;
+		endcase
+endmodule
+
+module lights(input logic TA,TB,M,reset,clk,output logic [1:0] LA,LB);
+	typedef enum logic[1:0] {s0,s1,s2,s3} statetype;
+	statetype state,nextstate;
+	parameter green = 2'b00;parameter yellow = 2'b01;parameter red = 2'b10;
+		always_ff@(posedge clk,posedge reset)
+			if(reset) state <= s0;
+			else if(clk) state <= nextstate;
+		always_comb
+			case(state)
+				s0: if(TA) 		nextstate = s0;
+					 else 		nextstate = s1;
+				s1: 				nextstate = s2;
+				s2: if(TB | M) nextstate = s2;
+					 else       nextstate = s3;
+			   s3: 				nextstate = s0;
+			endcase
+		always_comb
+			case(state)
+				s0: {LA,LB} = {green,red};	
+				s1: {LA,LB} = {red,yellow};
+				s2: {LA,LB} = {red,green};
+			   s3: {LA,LB} = {yellow,green};
+			endcase
+		
+endmodule
+
+module controller(input logic P,R,TA,TB,clk,reset,output logic[1:0] LA,LB);
+	logic M;
+	mode mode1(P,R,reset,clk,M);
+	lights lights1(TA,TB,M,reset,clk,LA,LB);
+endmodule

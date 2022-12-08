@@ -1,0 +1,1 @@
+A signal declared as tri is z(Don't care) has multiple drivers

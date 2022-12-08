@@ -1,0 +1,17 @@
+module Ex_12(input logic[7:0] A, output logic[7:0] Y);
+  always_comb 
+  //casez allows "z" and "?" to be treated as 
+  //don't care in either the case expression and/or the case item when 
+  //doing case comparison.
+    casez (A)
+      8'b1??????? : Y = 8'b10000000;
+      8'b01?????? : Y = 8'b01000000;
+      8'b001????? : Y = 8'b00100000;
+      8'b0001???? : Y = 8'b00010000;
+      8'b00001??? : Y = 8'b00001000;
+      8'b000001?? : Y = 8'b00000100;
+      8'b0000001? : Y = 8'b00000010;
+      8'b00000001 : Y = 8'b00000001;
+      default     : Y = 8'b00000000;   
+    endcase
+endmodule 

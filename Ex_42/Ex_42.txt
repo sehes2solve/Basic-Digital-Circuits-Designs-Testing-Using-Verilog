@@ -1,0 +1,22 @@
+module Ex_42(input  logic clk, reset, x, output logic q);  
+	typedef enum logic [1:0] {S0 = 2'b00, S1 = 2'b01, S2 = 2'b10, S3 = 2'b11} State;
+	State state, nextstate;
+   // State Register  
+	always_ff @(posedge clk, posedge reset)    
+		if (reset) state <= S0;    
+		else       state <= nextstate;
+   // Next State Logic  
+   always_comb    
+		case (state)      
+			S0: 
+				if (x) nextstate = S3;           
+				else   nextstate = S1;      
+			S1: 
+				if (x) nextstate = S2;           
+				else   nextstate = S0;      
+			S2:      nextstate = S1;      
+			S3:      nextstate = S1;    
+		endcase
+   // Output Logic  
+   assign q = | state; 
+endmodule

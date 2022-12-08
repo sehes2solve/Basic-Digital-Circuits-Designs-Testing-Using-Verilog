@@ -1,0 +1,88 @@
+module Ex_14(input logic [1:0] I,output logic [3:0] M);
+	always_comb
+		case(I)
+			2'b00 : M = 4'h1;
+			2'b01 : M = 4'h2;
+			2'b10 : M = 4'h4;
+			2'b11 : M = 4'h8;
+		endcase
+endmodule
+
+module ex_14(input logic[5:0] IN,output logic[63:0] OUT);
+
+	logic[3:0] min1,min2,min3;
+	
+	dec_2X4 d1(IN[5:4],min1);
+	dec_2X4 d2(IN[3:2],min2);
+	dec_2X4 d3(IN[1:0],min3);
+	
+	assign OUT[63] = min1[3] & min2[3] & min3[3];
+	assign OUT[62] = min1[3] & min2[3] & min3[2];
+	assign OUT[61] = min1[3] & min2[3] & min3[1];
+	assign OUT[60] = min1[3] & min2[3] & min3[0];
+	assign OUT[59] = min1[3] & min2[2] & min3[3];
+	assign OUT[58] = min1[3] & min2[2] & min3[2];
+	assign OUT[57] = min1[3] & min2[2] & min3[1];
+	assign OUT[56] = min1[3] & min2[2] & min3[0];
+	assign OUT[55] = min1[3] & min2[1] & min3[3];
+	assign OUT[54] = min1[3] & min2[1] & min3[2];
+	assign OUT[53] = min1[3] & min2[1] & min3[1];
+	assign OUT[52] = min1[3] & min2[1] & min3[0];
+	assign OUT[51] = min1[3] & min2[0] & min3[3];
+	assign OUT[50] = min1[3] & min2[0] & min3[2];
+	assign OUT[49] = min1[3] & min2[0] & min3[1];
+	assign OUT[48] = min1[3] & min2[0] & min3[0];
+	
+	
+	assign OUT[47] = min1[2] & min2[3] & min3[3];
+	assign OUT[46] = min1[2] & min2[3] & min3[2];
+	assign OUT[45] = min1[2] & min2[3] & min3[1];
+	assign OUT[44] = min1[2] & min2[3] & min3[0];
+	assign OUT[43] = min1[2] & min2[2] & min3[3];
+	assign OUT[42] = min1[2] & min2[2] & min3[2];
+	assign OUT[41] = min1[2] & min2[2] & min3[1];
+	assign OUT[40] = min1[2] & min2[2] & min3[0];
+	assign OUT[39] = min1[2] & min2[1] & min3[3];
+	assign OUT[38] = min1[2] & min2[1] & min3[2];
+	assign OUT[37] = min1[2] & min2[1] & min3[1];
+	assign OUT[36] = min1[2] & min2[1] & min3[0];
+	assign OUT[35] = min1[2] & min2[0] & min3[3];
+	assign OUT[34] = min1[2] & min2[0] & min3[2];
+	assign OUT[33] = min1[2] & min2[0] & min3[1];
+	assign OUT[32] = min1[2] & min2[0] & min3[0];
+	
+	assign OUT[31] = min1[1] & min2[3] & min3[3];
+	assign OUT[30] = min1[1] & min2[3] & min3[2];
+	assign OUT[29] = min1[1] & min2[3] & min3[1];
+	assign OUT[28] = min1[1] & min2[3] & min3[0];
+	assign OUT[27] = min1[1] & min2[2] & min3[3];
+	assign OUT[26] = min1[1] & min2[2] & min3[2];
+	assign OUT[25] = min1[1] & min2[2] & min3[1];
+	assign OUT[24] = min1[1] & min2[2] & min3[0];
+	assign OUT[23] = min1[1] & min2[1] & min3[3];
+	assign OUT[22] = min1[1] & min2[1] & min3[2];
+	assign OUT[21] = min1[1] & min2[1] & min3[1];
+	assign OUT[20] = min1[1] & min2[1] & min3[0];
+	assign OUT[19] = min1[1] & min2[0] & min3[3];
+	assign OUT[18] = min1[1] & min2[0] & min3[2];
+	assign OUT[17] = min1[1] & min2[0] & min3[1];
+	assign OUT[16] = min1[1] & min2[0] & min3[0];
+	
+	assign OUT[15] = min1[0] & min2[3] & min3[3];
+	assign OUT[14] = min1[0] & min2[3] & min3[2];
+	assign OUT[13] = min1[0] & min2[3] & min3[1];
+	assign OUT[12] = min1[0] & min2[3] & min3[0];
+	assign OUT[11] = min1[0] & min2[2] & min3[3];
+	assign OUT[10] = min1[0] & min2[2] & min3[2];
+	assign OUT[9] = min1[0] & min2[2] & min3[1];
+	assign OUT[8] = min1[0] & min2[2] & min3[0];
+	assign OUT[7] = min1[0] & min2[1] & min3[3];
+	assign OUT[6] = min1[0] & min2[1] & min3[2];
+	assign OUT[5] = min1[0] & min2[1] & min3[1];
+	assign OUT[4] = min1[0] & min2[1] & min3[0];
+	assign OUT[3] = min1[0] & min2[0] & min3[3];
+	assign OUT[2] = min1[0] & min2[0] & min3[2];
+	assign OUT[1] = min1[0] & min2[0] & min3[1];
+	assign OUT[0] = min1[0] & min2[0] & min3[0];
+	
+endmodule

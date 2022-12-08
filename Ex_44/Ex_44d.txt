@@ -1,0 +1,11 @@
+module Ex_44d(input logic clk, a, b, c, d, output logic y);
+  logic regA, regB, regC, regD;
+  logic wire1, wire2;
+  always_ff @(posedge clk)
+    begin
+      regA <= a; regB <= b; regC <= c; regD <= d;
+		wire1 <= regA ^ regB;
+		wire2 <= regC ^ regD;
+		y <= wire1 ^ wire2;
+    end
+endmodule

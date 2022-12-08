@@ -1,0 +1,14 @@
+module Ex_20(input logic[7:0] A, output logic[2:0] Y, NONE);
+  always_comb
+    casez(A)
+      8'b00000000 : begin Y = 3'b0;     NONE = 1'b1; end
+      8'b00000001 : begin Y = 3'b0;     NONE = 1'b0; end
+      8'b0000001? : begin Y = 3'b001;   NONE = 1'b0; end
+      8'b000001?? : begin Y = 3'b010;   NONE = 1'b0; end
+      8'b00001??? : begin Y = 3'b011;   NONE = 1'b0; end
+      8'b0001???? : begin Y = 3'b100;   NONE = 1'b0; end
+      8'b001????? : begin Y = 3'b101;   NONE = 1'b0; end
+      8'b01?????? : begin Y = 3'b110;   NONE = 1'b0; end
+      8'b1??????? : begin Y = 3'b111;   NONE = 1'b0; end
+    endcase
+endmodule

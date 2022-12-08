@@ -1,0 +1,15 @@
+module Ex_22(input logic [2:0]B,output logic [6:0] Th);
+	always_comb
+		case(B)
+			3'b000: Th = 7'b000_0000;
+			3'b001: Th = 7'b000_0001;
+			3'b010: Th = 7'b000_0011;
+			3'b011: Th = 7'b000_0111;
+			
+			3'b100: Th = 7'b000_1111;
+			3'b101: Th = 7'b001_1111;
+			3'b110: Th = 7'b011_1111;
+			3'b111: Th = 7'b111_1111;
+			default: Th = 7'b000_0000;
+		endcase
+	endmodule

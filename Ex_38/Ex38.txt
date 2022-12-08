@@ -1,0 +1,27 @@
+module Ex_38(input logic UP,reset,clk,output logic [2:0] G);
+	typedef enum logic[2:0] {
+	s0 = 3'b000,
+	s1 = 3'b001,
+	s2 = 3'b011,
+	s3 = 3'b010,
+	s4 = 3'b110,
+	s5 = 3'b111,
+	s6 = 3'b101,
+	s7 = 3'b100} statetype;
+	statetype state,nextstate;
+	always_ff@(posedge clk,posedge reset)
+		if(reset) state <= s0;
+		else if(clk) state <= nextstate;
+	always_comb
+		case(state)
+				s0: nextstate = (UP) ? s1 : s7;
+				s1: nextstate = (UP) ? s2 : s0;
+				s2: nextstate = (UP) ? s3 : s1;
+				s3: nextstate = (UP) ? s4 : s2;
+				s4: nextstate = (UP) ? s5 : s3;
+				s5: nextstate = (UP) ? s6 : s4;
+				s6: nextstate = (UP) ? s7 : s5;
+				s7: nextstate = (UP) ? s0 : s6;
+		endcase
+	assign G = state;
+endmodule

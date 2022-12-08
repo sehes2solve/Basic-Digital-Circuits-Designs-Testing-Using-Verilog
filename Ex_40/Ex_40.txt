@@ -1,0 +1,21 @@
+module Ex_40(input clk, reset, a,
+output y);
+typedef enum logic [1:0] {S0=2'b00, S1=2'b01,
+S11=2'b10} statetype;
+statetype  state, nextstate;
+always_ff @(posedge clk, posedge reset)
+if (reset) state <= S0;
+else state <= nextstate;
+
+always_comb
+case (state)
+S0: if (a) nextstate = S1;
+else nextstate = S0;
+S1: if (a) nextstate = S11;
+else nextstate = S0;
+S11: nextstate = S11;
+default: nextstate = S0;
+endcase
+
+assign y = state[1];
+endmodule
